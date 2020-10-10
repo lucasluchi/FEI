@@ -1,0 +1,5 @@
+main.pbi: C:\projects\FEI\NEA630\lab6\main.c \
+  C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ RL\rl78\inc\ior5f100le.h \
+  C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ RL\rl78\inc\ior5f100le_ext.h \
+  C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ RL\rl78\inc\intrinsics.h \
+  C:\projects\FEI\NEA630\lab6/myRL78.h
