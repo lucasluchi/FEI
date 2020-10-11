@@ -10,9 +10,8 @@ import time
 tipoConta = ["salário", "comum", "plus"]
 
 bdNome = "quempoupatem.csv"
-bdTabelas = ["CPF", "NOME", "CONTA", "SALDO", "SENHA"]
+bdTabelas = ['CPF', 'NOME', 'CONTA', 'SALDO', 'SENHA']
 bdDados = []
-bdDadosParaAdd = []
 
 #####################################################################
 # ---------------------------- Funções ---------------------------- #
@@ -41,8 +40,51 @@ def TelaDadosInvalidos():
     # Volta para a tela pricipal
     TelaPrincipal()
 
+def BuscaCliente (cpf):
+    bdDados.clear()
+    bdBusca = []
 
-#def CadastroCliente(nome, cpf, tipo_conta, valor, senha):
+    #
+    with open(bdNome, 'r') as csvfile:
+        leitura = csv.DictReader(csvfile)
+
+        for linha in leitura:
+            bdBusca.append(dict(linha))
+
+    #
+    for linha in bdBusca:
+        for key, val in linha.items():
+            if cpf in val:
+                bdDados.append(linha)
+                break
+
+
+def CadastroCliente(nome, cpf, tipo_conta, valor, senha):
+    bdDadosParaAdd = {
+        "CPF": cpf,
+        "NOME": nome,
+        "CONTA": tipoConta[tipo_conta],
+        "SALDO": valor,
+        "SENHA": senha
+    }
+
+    bdInsereDados = []
+    bdInsereDados.append(bdDadosParaAdd)
+
+    # verifica se o arquivo já existe para não escrever o header novamente
+    arquivo_existe = os.path.isfile(bdNome)
+
+    # abre o arquivo para salvar o novo cliente, caso não exista o arquivo cria um novo
+    with open(bdNome, 'a') as csvfile:
+        escreve = csv.DictWriter(csvfile, fieldnames=bdTabelas)
+
+        # proteção para evitar de escrever o header toda vez
+        if arquivo_existe == False:
+            escreve.writeheader()
+
+        # insere os dados no arquivo
+        for item in bdInsereDados:
+            escreve.writerow(item)
 
 
 def MenuNovoCliente():
@@ -93,7 +135,19 @@ def MenuNovoCliente():
             TelaPrincipal()
             break
         elif key == 'enter':
+            os.system("cls")
+
+            BuscaCliente(str(cpf))
             
+            if bdDados[0]['CPF'] != str(cpf):
+                CadastroCliente(nome, cpf, conta, valor, senha)
+                print("Cliente cadastrado com sucesso!")
+            else:
+                print("Erro! CPF já cadastrado!")
+
+            time.sleep(3)
+
+            TelaPrincipal()
             break
         
 
@@ -109,8 +163,7 @@ while True:
     key = keyboard.read_key(True)
 
     if key == '0':
-        if tela == 0:
-            break
+        break
     elif key == 'esc':
         TelaPrincipal()
     elif key == '1':
