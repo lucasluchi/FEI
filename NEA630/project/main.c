@@ -98,9 +98,9 @@ void main (void)
 			doors_closed = 0;
 		}
 		
-		// verifica o estado do TPMS, ign, imobilizador, sensor da bateria 
+		// verifica o estado da ign, imobilizador, sensor da bateria 
 		// e se as 4 portas estão fechadas
-		if (TPMS_LED == 0 && IGN_SIG == 1 && IMOB_SIG == 1 && BAT_SIG == 1 && doors_closed == 1)
+		if (IGN_SIG == 1 && IMOB_SIG == 1 && BAT_SIG == 1 && doors_closed == 1)
 		{
 			ENGINE = 1;
 		}
