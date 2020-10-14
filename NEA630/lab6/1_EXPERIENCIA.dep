@@ -5,63 +5,67 @@
     <configuration>
         <name>Debug</name>
         <outputs>
-            <file>$PROJ_DIR$\Debug\Obj\main.o</file>
-            <file>$TOOLKIT_DIR$\lib\dlrlnnf22n.a</file>
-            <file>$PROJ_DIR$\Debug\Exe\1_EXPERIENCIA.out</file>
-            <file>$TOOLKIT_DIR$\lib\dbgrlnnf22nd.a</file>
-            <file>$PROJ_DIR$\main.c</file>
-            <file>$PROJ_DIR$\Debug\Obj\main.__cstat.et</file>
-            <file>$TOOLKIT_DIR$\config\lnkr5f100le.icf</file>
             <file>$PROJ_DIR$\Debug\Obj\main.xcl</file>
+            <file>$TOOLKIT_DIR$\config\lnkr5f100le.icf</file>
+            <file>$TOOLKIT_DIR$\lib\dbgrlnnf22nd.a</file>
+            <file>$TOOLKIT_DIR$\lib\dlrlnnf22n.a</file>
             <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
+            <file>$PROJ_DIR$\myrl78.h</file>
             <file>$PROJ_DIR$\Debug\Obj\1_EXPERIENCIA.pbd</file>
+            <file>$TOOLKIT_DIR$\inc\ior5f100le.h</file>
+            <file>$PROJ_DIR$\main.c</file>
             <file>$PROJ_DIR$\Debug\List\1_EXPERIENCIA.map</file>
             <file>$TOOLKIT_DIR$\inc\ior5f100le_ext.h</file>
-            <file>$PROJ_DIR$\myrl78.h</file>
-            <file>$TOOLKIT_DIR$\inc\ior5f100le.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\main.__cstat.et</file>
+            <file>$PROJ_DIR$\Debug\Exe\1_EXPERIENCIA.out</file>
+            <file>$PROJ_DIR$\Debug\Obj\main.o</file>
         </outputs>
-        <file>
-            <name>$PROJ_DIR$\Debug\Exe\1_EXPERIENCIA.out</name>
-            <outputs>
-                <tool>
-                    <name>ILINK</name>
-                    <file> 10</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ILINK</name>
-                    <file> 6 0 3 1</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\main.c</name>
-            <outputs>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 7</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 5</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCRL78</name>
-                    <file> 13 11 8 12</file>
-                </tool>
-            </inputs>
-        </file>
         <file>
             <name>[ROOT_NODE]</name>
             <outputs>
                 <tool>
                     <name>ILINK</name>
-                    <file> 10 2</file>
+                    <file> 9 12</file>
                 </tool>
             </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\main.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCRL78</name>
+                    <file> 13</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 0</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 11</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCRL78</name>
+                    <file> 7 10 4 5</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\Debug\Exe\1_EXPERIENCIA.out</name>
+            <outputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 9</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 1 13 2 3</file>
+                </tool>
+            </inputs>
         </file>
     </configuration>
     <configuration>
