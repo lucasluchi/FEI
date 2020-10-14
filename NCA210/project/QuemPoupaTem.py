@@ -1,23 +1,22 @@
 import os
 import keyboard
-import csv
 import time
+import DBClients
+
 
 #####################################################################
 # ---------------------- Variáveis Globais ------------------------ #
 #####################################################################
 
-tipoConta = ["salário", "comum", "plus"]
-
-bdNome = "quempoupatem.csv"
-bdTabelas = ['CPF', 'NOME', 'CONTA', 'SALDO', 'SENHA']
-bdDados = []
+accountType = ["salário", "comum", "plus"]
+accountFees = [0.05, 0.03, 0.01]
+accountLimits = [0.00, -500.00, -5000.00]
 
 #####################################################################
 # ---------------------------- Funções ---------------------------- #
 #####################################################################
 
-def TelaPrincipal():
+def ScreenHome():
     os.system("cls")
     print("################# QuemPoupaTem! #################")
     print(" Onde seu dinheiro é mais do que apenas números!\n")
@@ -29,7 +28,8 @@ def TelaPrincipal():
     print("6 - Extrato\n")
     print("0 - Sair")
 
-def TelaDadosInvalidos():
+
+def ScreenInvalidData():
     os.system("cls")
     print("Dados inválidos!")
     print("Verificar os dados com o cliente.")
@@ -38,125 +38,128 @@ def TelaDadosInvalidos():
     time.sleep(5)
 
     # Volta para a tela pricipal
-    TelaPrincipal()
-
-def BuscaCliente (cpf):
-    bdDados.clear()
-    bdBusca = []
-
-    #
-    with open(bdNome, 'r') as csvfile:
-        leitura = csv.DictReader(csvfile)
-
-        for linha in leitura:
-            bdBusca.append(dict(linha))
-
-    #
-    for linha in bdBusca:
-        for key, val in linha.items():
-            if cpf in val:
-                bdDados.append(linha)
-                break
+    ScreenHome()
 
 
-def CadastroCliente(nome, cpf, tipo_conta, valor, senha):
-    bdDadosParaAdd = {
-        "CPF": cpf,
-        "NOME": nome,
-        "CONTA": tipoConta[tipo_conta],
-        "SALDO": valor,
-        "SENHA": senha
-    }
-
-    bdInsereDados = []
-    bdInsereDados.append(bdDadosParaAdd)
-
-    # verifica se o arquivo já existe para não escrever o header novamente
-    arquivo_existe = os.path.isfile(bdNome)
-
-    # abre o arquivo para salvar o novo cliente, caso não exista o arquivo cria um novo
-    with open(bdNome, 'a') as csvfile:
-        escreve = csv.DictWriter(csvfile, fieldnames=bdTabelas)
-
-        # proteção para evitar de escrever o header toda vez
-        if arquivo_existe == False:
-            escreve.writeheader()
-
-        # insere os dados no arquivo
-        for item in bdInsereDados:
-            escreve.writerow(item)
-
-
-def MenuNovoCliente():
-    nome = ""
-    cpf = 0
-    conta = 0
-    valor = 0.00
-    senha = ""
+# menu para cadastro de cliente
+def MenuNewClient():
+    client = []
 
     os.system("cls")
     print("Cadastro de novo cliente\n")
 
-    nome = input("Nome: ")
+    # recebe os dados do cliente
+    client.append(input("Nome: "))
 
+    # proteção para caso o cliente insira dados errados
     try:
-        cpf = int(input("CPF (somente números): "))
+        client.append(int(input("CPF (somente números): ")))
         print("(0 - salário, 1 - comum e 2 - plus)")
-        conta = int(input("Tipo de conta: "))
-        valor = float(input("Saldo inicial da conta: R$ ").replace(",","."))
+        client.append(int(input("Tipo de conta: ")))
+        client.append(float(input("Saldo inicial da conta: R$ ").replace(",",".")))
     except ValueError as e:
-        TelaDadosInvalidos()
+        ScreenInvalidData()
         return
 
-    senha = input("Senha do usuário: ")
+    client.append(input("Senha do usuário: "))
     
     # Verifica se o CPF tem o tamanho certo e se o tipo de conta está correta
-    if len(str(cpf)) != 11 or (conta < 0 or conta > 2):   
+    if len(str(client[1])) != 11 or (client[2] < 0 or client[2] > 2):   
         # Exibe mensagem de dados inválidos
-        TelaDadosInvalidos()
+        ScreenInvalidData()
         return
 
+    # pede uma confirmação dos dados do cliente
     os.system("cls")
     print("Os dados do cliente estão corretos?\n")
 
-    print("Nome: " + nome)
-    print(f"CPF: {cpf}")
-    print("Tipo de conta: " + tipoConta[conta])
-    print(f"Saldo inicial da conta: R$ {valor:.2f}")
-    print("Senha do usuário: " + senha)
+    print(f"Nome: {client[0]}")
+    print(f"CPF: {client[1]}")
+    print(f"Tipo de conta: {accountType[client[2]]}")
+    print(f"Saldo inicial da conta: R$ {client[3]:.2f}")
+    print(f"Senha do usuário: {client[4]}")
 
     print("\n\nENTER - sim, salvar")
     print("ESC - não, descartar")
 
+    # aguarda a confirmação
     while True:
         key = keyboard.read_key(True)
 
         if key == 'esc':
-            TelaPrincipal()
+            ScreenHome()
+
             break
         elif key == 'enter':
             os.system("cls")
 
-            BuscaCliente(str(cpf))
-            
-            if bdDados[0]['CPF'] != str(cpf):
-                CadastroCliente(nome, cpf, conta, valor, senha)
+            # verifica se o CPF já esta cadastrado, se não tenta inserir os dados do cliente
+            if DBClients.CreateClient(client) == True:
                 print("Cliente cadastrado com sucesso!")
             else:
                 print("Erro! CPF já cadastrado!")
 
             time.sleep(3)
+            ScreenHome()
 
-            TelaPrincipal()
             break
         
+
+def MenuApagaCliente(cpf):
+    os.system("cls")
+    print("Entre com o CPF do cliente que deseja excluir")
+    inCPF = input("CPF (somente números): ")
+
+    if BuscaCliente(str(cpf)) == False:
+        print("Erro! Cliente não encontrado.")
+
+        time.sleep(3)
+
+        ScreenHome()
+
+        return
+    else:
+        os.system("cls")
+        print("Os dados do cliente estão corretos?\n")
+
+        print(f"Nome: {bdDados[0]['NOME']}")
+        print(f"CPF: {bdDados[0]['CPF']}")
+        print(f"Tipo de conta: {bdDados[0]['CONTA']}")
+        print(f"Saldo inicial da conta: R$ {float(bdDados[0]['SALDO']):.2f}")
+        print(f"Senha do usuário: {bdDados[0]['SENHA']}")
+
+        print("\n\nENTER - apagar cliente")
+        print("ESC - cancelar e retornar")
+
+        while True:
+            key = keyboard.read_key(True)
+
+            if key == 'esc':
+                ScreenHome()
+                break
+            elif key == 'enter':
+                os.system("cls")
+
+                if BuscaCliente(str(cpf)) == False:
+                #if bdDados[0]['CPF'] != str(cpf):
+                    CadastroCliente(nome, cpf, conta, valor, senha)
+                    print("Cliente cadastrado com sucesso!")
+                else:
+                    print("Erro! CPF já cadastrado!")
+
+
+                time.sleep(3)
+
+                ScreenHome()
+                break
 
 #####################################################################
 # --------------- O programa principal começa aqui ---------------- #
 #####################################################################
 
+
 # printa a tela principal com todas as opções que o sistema oferece
-TelaPrincipal()
+ScreenHome()
 
 while True:
 
@@ -165,8 +168,10 @@ while True:
     if key == '0':
         break
     elif key == 'esc':
-        TelaPrincipal()
+        ScreenHome()
     elif key == '1':
-        MenuNovoCliente()
+        MenuNewClient()
+    elif key == '2':
+        MenuApagaCliente()
     
 
