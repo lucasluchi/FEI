@@ -28724,7 +28724,7 @@
     "scope": null
   },
   {
-    "ID": "c:main.c@969@macro@DOOR1_SIG",
+    "ID": "c:main.c@922@macro@DOOR1_SIG",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "DOOR1_SIG",
@@ -28738,7 +28738,7 @@
     "scope": null
   },
   {
-    "ID": "c:main.c@1000@macro@DOOR2_SIG",
+    "ID": "c:main.c@953@macro@DOOR2_SIG",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "DOOR2_SIG",
@@ -28752,7 +28752,7 @@
     "scope": null
   },
   {
-    "ID": "c:main.c@1031@macro@DOOR3_SIG",
+    "ID": "c:main.c@984@macro@DOOR3_SIG",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "DOOR3_SIG",
@@ -28766,7 +28766,7 @@
     "scope": null
   },
   {
-    "ID": "c:main.c@1062@macro@DOOR4_SIG",
+    "ID": "c:main.c@1015@macro@DOOR4_SIG",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "DOOR4_SIG",
@@ -28780,7 +28780,7 @@
     "scope": null
   },
   {
-    "ID": "c:main.c@1157@macro@TPMS1_SIG",
+    "ID": "c:main.c@1110@macro@TPMS1_SIG",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "TPMS1_SIG",
@@ -28794,7 +28794,7 @@
     "scope": null
   },
   {
-    "ID": "c:main.c@1188@macro@TPMS2_SIG",
+    "ID": "c:main.c@1141@macro@TPMS2_SIG",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "TPMS2_SIG",
@@ -28808,7 +28808,7 @@
     "scope": null
   },
   {
-    "ID": "c:main.c@1219@macro@TPMS3_SIG",
+    "ID": "c:main.c@1172@macro@TPMS3_SIG",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "TPMS3_SIG",
@@ -28822,7 +28822,7 @@
     "scope": null
   },
   {
-    "ID": "c:main.c@1250@macro@TPMS4_SIG",
+    "ID": "c:main.c@1203@macro@TPMS4_SIG",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "TPMS4_SIG",
@@ -28836,7 +28836,7 @@
     "scope": null
   },
   {
-    "ID": "c:main.c@1361@macro@TPMS_LED",
+    "ID": "c:main.c@1314@macro@TPMS_LED",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "TPMS_LED",
@@ -28850,7 +28850,7 @@
     "scope": null
   },
   {
-    "ID": "c:main.c@1390@macro@ENGINE",
+    "ID": "c:main.c@1343@macro@ENGINE",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "ENGINE",
@@ -28892,7 +28892,7 @@
     "scope": null
   },
   {
-    "ID": "c:main.c@2019@F@main@doors_closed",
+    "ID": "c:main.c@1972@F@main@doors_closed",
     "What": "Variable",
     "defdec": "Def",
     "display": "doors_closed",

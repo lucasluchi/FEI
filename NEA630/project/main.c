@@ -25,7 +25,7 @@ __root __far const char senha[10] = {0,0,0,0,0,0,0,0,0,0};
 #define IMOB_SIG	P0_bit.no1
 #define BAT_SIG		P0_bit.no2
 
-// O sinal das portas é invertido a verificação do pino também deve ser invertida
+// O sinal das portas é invertido 
 #define DOOR1_SIG	P14_bit.no0
 #define DOOR2_SIG	P14_bit.no1
 #define DOOR3_SIG	P14_bit.no2
@@ -79,7 +79,8 @@ void main (void)
 	while(1)
 	{
 		// verifica se todos os pneus estão com a pressão ok
-		if (TPMS1_SIG == 0 || TPMS2_SIG == 0 || TPMS3_SIG == 0 || TPMS4_SIG == 0)
+		if (TPMS1_SIG == 0 || TPMS2_SIG == 0 
+		|| TPMS3_SIG == 0 || TPMS4_SIG == 0)
 		{
 			TPMS_LED = 1;	// acende o led indicando calibração baixa 
 		}
@@ -89,7 +90,8 @@ void main (void)
 		}
 		
 		// verifica se o sinal das 4 portas estão como fechadas
-		if (DOOR1_SIG == 0 && DOOR2_SIG == 0 && DOOR3_SIG == 0 && DOOR4_SIG == 0)
+		if (DOOR1_SIG == 0 && DOOR2_SIG == 0 
+		&& DOOR3_SIG == 0 && DOOR4_SIG == 0)
 		{
 			doors_closed = 1;
 		}
@@ -100,7 +102,8 @@ void main (void)
 		
 		// verifica o estado da ign, imobilizador, sensor da bateria 
 		// e se as 4 portas estão fechadas
-		if (IGN_SIG == 1 && IMOB_SIG == 1 && BAT_SIG == 1 && doors_closed == 1)
+		if (IGN_SIG == 1 && IMOB_SIG == 1 
+		&& BAT_SIG == 1 && doors_closed == 1)
 		{
 			ENGINE = 1;
 		}
