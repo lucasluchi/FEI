@@ -104,29 +104,23 @@ def MenuNewClient():
 
             break
         
-
-def MenuApagaCliente(cpf):
+# deleta o cliente
+def MenuDeleteClient():
     os.system("cls")
     print("Entre com o CPF do cliente que deseja excluir")
-    inCPF = input("CPF (somente números): ")
+    cpf = str(input("CPF (somente números): "))
 
-    if BuscaCliente(str(cpf)) == False:
-        print("Erro! Cliente não encontrado.")
+    client = DBClients.SearchClient(cpf)
 
-        time.sleep(3)
+    os.system("cls")
 
-        ScreenHome()
-
-        return
-    else:
-        os.system("cls")
+    if cpf == client['CPF']:
         print("Os dados do cliente estão corretos?\n")
 
-        print(f"Nome: {bdDados[0]['NOME']}")
-        print(f"CPF: {bdDados[0]['CPF']}")
-        print(f"Tipo de conta: {bdDados[0]['CONTA']}")
-        print(f"Saldo inicial da conta: R$ {float(bdDados[0]['SALDO']):.2f}")
-        print(f"Senha do usuário: {bdDados[0]['SENHA']}")
+        print(f"Nome: {client['NOME']}")
+        print(f"CPF: {client['CPF']}")
+        print(f"Tipo de conta: {accountType[int(client['CONTA'])]}")
+        print(f"Saldo inicial da conta: R$ {float(client['SALDO']):.2f}")
 
         print("\n\nENTER - apagar cliente")
         print("ESC - cancelar e retornar")
@@ -140,23 +134,26 @@ def MenuApagaCliente(cpf):
             elif key == 'enter':
                 os.system("cls")
 
-                if BuscaCliente(str(cpf)) == False:
-                #if bdDados[0]['CPF'] != str(cpf):
-                    CadastroCliente(nome, cpf, conta, valor, senha)
-                    print("Cliente cadastrado com sucesso!")
-                else:
-                    print("Erro! CPF já cadastrado!")
+                DBClients.DeleteClient(cpf)
 
+                print("Cliente deletado!")
 
                 time.sleep(3)
 
                 ScreenHome()
                 break
 
+    else:
+        print("Erro! Cliente não encontrado.")
+
+        time.sleep(3)
+
+        ScreenHome()
+        
+
 #####################################################################
 # --------------- O programa principal começa aqui ---------------- #
 #####################################################################
-
 
 # printa a tela principal com todas as opções que o sistema oferece
 ScreenHome()
@@ -164,7 +161,7 @@ ScreenHome()
 while True:
 
     key = keyboard.read_key(True)
-
+    
     if key == '0':
         break
     elif key == 'esc':
@@ -172,6 +169,6 @@ while True:
     elif key == '1':
         MenuNewClient()
     elif key == '2':
-        MenuApagaCliente()
+        MenuDeleteClient()
     
 

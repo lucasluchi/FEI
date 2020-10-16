@@ -47,3 +47,62 @@ def CreateClient(data):
 
     # retorna True indicando que o cliente foi cadastrado com sucesso
     return True
+
+
+def SearchClient(cpf):
+    notfound = {
+        "CPF": '',
+        "NOME": '',
+        "CONTA": '',
+        "SALDO": '',
+        "SENHA": ''
+    }
+
+    dbData = []
+
+    # abre o arquivo e lê todos os dados
+    with open(dbClients, 'r') as csvfile:
+        read = csv.DictReader(csvfile)
+
+        for item in read:
+            dbData.append(dict(item))
+
+    # verifica se o CPF já está cadastrado, se estiver
+    # retorna False indicando que não foi possível cadastrar o cliente
+    for line in dbData:
+        for col, val in line.items():
+            if str(cpf) in val and col == 'CPF':
+                return line
+
+    return notfound
+
+
+def DeleteClient(cpf):
+    dbData = []
+
+    # abre o arquivo e lê todos os dados
+    with open(dbClients, 'r') as csvfile:
+        read = csv.DictReader(csvfile)
+
+        for item in read:
+            dbData.append(dict(item))
+
+    # verifica se o CPF já está cadastrado, se estiver
+    # retorna False indicando que não foi possível cadastrar o cliente
+    for line in dbData:
+        for col, val in line.items():
+            if str(cpf) in val and col == 'CPF':
+                dbData.remove(line)
+                break
+
+    # da o append na nova linha com os dados do cliente
+    with open(dbClients, 'a', newline="") as csvfile:
+        # limpa todo o arquivo
+        csvfile.seek(0)
+        csvfile.truncate()
+        
+        write = csv.DictWriter(csvfile, fieldnames=tbClients)
+        write.writeheader()
+
+        for item in dbData:
+            write.writerow(item)
