@@ -84,8 +84,7 @@ def MenuNewClient():
 
     # aguarda a confirmação
     while True:
-        key = keyboard.read_key(True)
-        keyboard.read_event(True)
+        key = keyboard.read_key(False)
 
         if key == 'esc':
             ScreenHome()
@@ -132,8 +131,7 @@ def MenuDeleteClient():
 
         # aguardar confirmar ou retornar
         while True:
-            key = keyboard.read_key(True)
-            keyboard.read_event(True)
+            key = keyboard.read_key(False)
 
             if key == 'esc':
                 ScreenHome()
@@ -201,8 +199,10 @@ def MenuDebitClient():
                 print("Erro! Saldo insuficiente.")
                 print(f"Saldo: R$ {float(client['SALDO']):.2f}")
         else:
+            os.system("cls")
             print("Erro! Senha incorreta.")
     else:
+        os.system("cls")
         print("Erro! Cliente não encontrado.")
 
     time.sleep(3)
@@ -246,6 +246,7 @@ def MenuCreditClient():
 
         time.sleep(2)
     else:
+        os.system("cls")
         print("Erro! Cliente não encontrado.")
 
     time.sleep(3)
@@ -279,15 +280,16 @@ def MenuBalanceClient():
             print("\n\nESC - para voltar")
 
             while True:
-                key = keyboard.read_key(True)
-                keyboard.read_event(True)
+                key = keyboard.read_key(False)
 
                 if key == 'esc':
                     ScreenHome()
                     return
         else:
+            os.system("cls")
             print("Erro! Senha incorreta.")
     else:
+        os.system("cls")
         print("Erro! Cliente não encontrado.")
 
     time.sleep(3)
@@ -323,20 +325,22 @@ def MenuStatementClient():
             print("\n\nESC - para voltar")
 
             while True:
-                key = keyboard.read_key(True)
-                keyboard.read_event(True)
+                key = keyboard.read_key(False)
 
                 if key == 'esc':
                     ScreenHome()
                     return
         else:
+            os.system("cls")
             print("Erro! Senha incorreta.")
     else:
+        os.system("cls")
         print("Erro! Cliente não encontrado.")
 
     time.sleep(3)
 
     ScreenHome()
+
 
 #####################################################################
 # --------------- O programa principal começa aqui ---------------- #
@@ -350,9 +354,6 @@ while True:
 
     # recebe a tecla digitada
     key = keyboard.read_key(True)
-
-    # limpa o evento para não acumular quando entrar nos menus
-    keyboard.read_event(True)
 
     if key == '0':
         break
