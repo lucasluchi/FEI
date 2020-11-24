@@ -41,6 +41,55 @@ __root __far const char senha[10] = {0,0,0,0,0,0,0,0,0,0};
 #define TPMS_LED	P7_bit.no6
 #define ENGINE		P7_bit.no7
 
+int engine_start_times = 0;
+
+#pragma vector = INTIT_vect
+__interrupt void trata_IT(void)
+{
+	int doors_closed = 0;
+
+	// verifica se o sinal das 4 portas estão como fechadas
+	if (DOOR1_SIG == 0 && DOOR2_SIG == 0 
+		&& DOOR3_SIG == 0 && DOOR4_SIG == 0)
+	{
+		doors_closed = 1;
+	}
+	else
+	{
+		doors_closed = 0;
+	}
+	
+	// verifica o imobilizador, sensor da bateria 
+	// e se as 4 portas estão fechadas
+	if (IMOB_SIG == 1 && BAT_SIG == 1 && doors_closed == 1)
+	{
+		ENGINE = 1;
+		
+		ITMK = 1;	// desabilita o timer
+		
+		engine_start_times = 0;
+		
+		return;
+	}
+	else
+	{
+		ENGINE = 0;
+	}
+	
+	// tenta dar a partida no motor durante 1s
+	if (++engine_start_times == 10)
+	{
+		ITMK = 1;	// desabilita o timer
+		
+		engine_start_times = 0;
+	}
+}
+
+#pragma vector = INTP0_vect
+__interrupt void trata_INTP0(void)
+{
+	ITMK = 0;	// habilita o timer
+}
 
 void HardwareInit (void)
 {
@@ -70,46 +119,40 @@ void HardwareInit (void)
 	P7_bit.no7 = 0;
 }
 
+void IntInit (void)
+{
+	// configura o timer
+	CMC = 0;				// desativa osciladores X1 e XT1
+	OSMC = bWUTMMCK0;		// configura o LOCO como fonte de clock do IT/RTC
+	RTCEN = 1;				// habilita o RTC e o IT
+	ITMC = bRINTE | 1499;	// configura o IT para uma interrupção a cada 100 ms
+	ITMK = 1;				// desabilita a interrupção do IT
+	
+	// configura a interrupção da ignição
+	EGN0 = BIT0; 			// INTP0 na borda de descida
+	PIF0 = 0;				// apaga flag da INTP0
+	PMK0 = 0;				// habilita INTP0
+	
+	__enable_interrupt();
+}
+
 void main (void)
 {
-	int doors_closed = 0;
-	
 	HardwareInit();
+	
+	IntInit();
 	
 	while(1)
 	{
 		// verifica se todos os pneus estão com a pressão ok
 		if (TPMS1_SIG == 0 || TPMS2_SIG == 0 
-		|| TPMS3_SIG == 0 || TPMS4_SIG == 0)
+			|| TPMS3_SIG == 0 || TPMS4_SIG == 0)
 		{
 			TPMS_LED = 1;	// acende o led indicando calibração baixa 
 		}
 		else
 		{
 			TPMS_LED = 0;	// apaga o led
-		}
-		
-		// verifica se o sinal das 4 portas estão como fechadas
-		if (DOOR1_SIG == 0 && DOOR2_SIG == 0 
-		&& DOOR3_SIG == 0 && DOOR4_SIG == 0)
-		{
-			doors_closed = 1;
-		}
-		else
-		{
-			doors_closed = 0;
-		}
-		
-		// verifica o estado da ign, imobilizador, sensor da bateria 
-		// e se as 4 portas estão fechadas
-		if (IGN_SIG == 1 && IMOB_SIG == 1 
-		&& BAT_SIG == 1 && doors_closed == 1)
-		{
-			ENGINE = 1;
-		}
-		else
-		{
-			ENGINE = 0;
 		}
 	}
 }

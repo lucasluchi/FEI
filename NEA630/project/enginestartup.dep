@@ -5,35 +5,35 @@
     <configuration>
         <name>Debug</name>
         <outputs>
-            <file>$PROJ_DIR$\Debug\List\enginestartup.map</file>
             <file>$PROJ_DIR$\Debug\Obj\LibReplacement.s</file>
             <file>$PROJ_DIR$\Debug\Obj\LibReplacement.o</file>
-            <file>$PROJ_DIR$\myrl78.h</file>
-            <file>$TOOLKIT_DIR$\inc\ior5f100le.h</file>
-            <file>$PROJ_DIR$\main.c</file>
-            <file>$PROJ_DIR$\Debug\Obj\main.o</file>
-            <file>$TOOLKIT_DIR$\lib\dlrlnnf22n.a</file>
+            <file>$TOOLKIT_DIR$\inc\ior5f100le_ext.h</file>
+            <file>$TOOLKIT_DIR$\config\lnkr5f100le.icf</file>
             <file>$PROJ_DIR$\Debug\Obj\main.xcl</file>
+            <file>$TOOLKIT_DIR$\lib\dlrlnnf22n.a</file>
+            <file>$PROJ_DIR$\main.c</file>
+            <file>$PROJ_DIR$\Debug\Obj\main.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\inc\ior5f100le.h</file>
             <file>$PROJ_DIR$\Debug\Obj\enginestartup.pbd</file>
             <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
             <file>$TOOLKIT_DIR$\lib\dbgrlnnf22nd.a</file>
-            <file>$TOOLKIT_DIR$\config\lnkr5f100le.icf</file>
             <file>$PROJ_DIR$\Debug\Exe\enginestartup.out</file>
-            <file>$TOOLKIT_DIR$\inc\ior5f100le_ext.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\main.__cstat.et</file>
+            <file>$PROJ_DIR$\myrl78.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\main.o</file>
+            <file>$PROJ_DIR$\Debug\List\enginestartup.map</file>
         </outputs>
         <file>
             <name>$PROJ_DIR$\Debug\Obj\LibReplacement.s</name>
             <outputs>
                 <tool>
                     <name>ARL78</name>
-                    <file> 2</file>
+                    <file> 1</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ARL78</name>
-                    <file> 4 14</file>
+                    <file> 8 2</file>
                 </tool>
             </inputs>
         </file>
@@ -42,21 +42,21 @@
             <outputs>
                 <tool>
                     <name>ICCRL78</name>
-                    <file> 6</file>
+                    <file> 14</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 8</file>
+                    <file> 4</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 15</file>
+                    <file> 7</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCRL78</name>
-                    <file> 4 14 10 3</file>
+                    <file> 8 2 10 13</file>
                 </tool>
             </inputs>
         </file>
@@ -65,13 +65,13 @@
             <outputs>
                 <tool>
                     <name>ILINK</name>
-                    <file> 0</file>
+                    <file> 15</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ILINK</name>
-                    <file> 12 2 6 11 7</file>
+                    <file> 3 1 14 11 5</file>
                 </tool>
             </inputs>
         </file>
@@ -80,11 +80,11 @@
             <outputs>
                 <tool>
                     <name>ILINK</name>
-                    <file> 13 0</file>
+                    <file> 12 15</file>
                 </tool>
                 <tool>
                     <name>INTERNAL_HWSUPPORT</name>
-                    <file> 1</file>
+                    <file> 0</file>
                 </tool>
             </outputs>
         </file>
